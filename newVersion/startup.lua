@@ -11,33 +11,33 @@ local dimension = "overworld"
 peripheral.find("modem", rednet.open)
 
 local modelist = {
-    { name = "SpaceShip",  flag = false },
-    { name = "QuadFPV",    flag = false },
-    { name = "Helicopter", flag = false },
-    { name = "AirShip",    flag = false },
-    { name = "Hms_Fly",    flag = false },
-    { name = "Follow",     flag = false },
-    { name = "GoHome",     flag = false },
-    { name = "PathFollow", flag = false },
-    { name = "ShipCamera", flag = false },
-    { name = "ShipFollow", flag = false },
-    { name = "Anchorage",  flag = false },
-    { name = "SpaceFpv",   flag = false },
-    { name = "Fixed-wing", flag = false },
+    { name = "宇宙飞船",  flag = false },
+    { name = "四轴无人机",    flag = false },
+    { name = "直升机", flag = false },
+    { name = "飞艇",    flag = false },
+    { name = "HMS飞行",    flag = false },
+    { name = "跟随",     flag = false },
+    { name = "回家",     flag = false },
+    { name = "路径跟随", flag = false },
+    { name = "飞船摄像头", flag = false },
+    { name = "飞船跟随", flag = false },
+    { name = "锚泊",  flag = false },
+    { name = "太空第一人称",   flag = false },
+    { name = "固定翼", flag = false },
 }
 
 local entryList = {
-    "top",
-    "bottom",
-    "left",
-    "right",
-    "front",
-    "back"
+    "顶部",
+    "底部",
+    "左侧",
+    "右侧",
+    "前方",
+    "后方"
 }
 
 local language = {
-    "chinese",
-    "english"
+    "中文",
+    "英文"
 }
 
 shell.openTab("shell")
@@ -367,13 +367,13 @@ function system:init()
     hologram_prop = system.datFromFile(self.files.holograms)
     local faceVec = engine_controller.getFaceRaw()
     if faceVec.x == 1 then
-        properties.shipFace = "east"
+        properties.shipFace = "东"
     elseif faceVec.x == -1 then
-        properties.shipFace = "west"
+        properties.shipFace = "西"
     elseif faceVec.z == 1 then
-        properties.shipFace = "south"
+        properties.shipFace = "南"
     else
-        properties.shipFace = "north"
+        properties.shipFace = "北"
     end
     system:updatePersistentData()
 end
@@ -417,7 +417,7 @@ system.resetProp = function()
         table.insert(enabledMonitors, peripheral.getName(firstMonitor))
     end
     return {
-        userName = "fashaodesu",
+        userName = "法师大人",
         holo_eye_pos = newVec(-3, 0, 0),
         mode = 1,
         HOME = { x = 0, y = 120, z = 0 },
@@ -426,7 +426,7 @@ system.resetProp = function()
         },
         enabledMonitors = enabledMonitors,
         winIndex = {},
-        profileIndex = "keyboard",
+        profileIndex = "键盘",
         coupled = true,
         drawHoloBorder = true,
         autoReplay = false,
@@ -444,7 +444,7 @@ system.resetProp = function()
         pathRange = 0,
         pathFollowMode = 1,
         profile = {
-            keyboard = {
+            键盘 = {
                 spaceShip_P = 1.2,
                 spaceShip_D = 2.4,
                 spaceShip_forward = 1.5,
@@ -476,7 +476,7 @@ system.resetProp = function()
                 camera_move_speed = 0.2,
                 shipFollow_move_speed = 0.2,
             },
-            joyStick = {
+            摇杆 = {
                 spaceShip_P = 3,
                 spaceShip_D = 6,
                 spaceShip_forward = 2,
@@ -514,7 +514,7 @@ system.resetProp = function()
         gravity = -2,
         airMass = 2, --空气密度 (风阻)
         rayCasterRange = 128,
-        shipFace = "south",
+        shipFace = "南",
         bg = "f",
         font = "8",
         title = "3",
@@ -2317,7 +2317,7 @@ function absHoloGram:radarPage()
         if properties.language == language[1] then
             self:draw_7x7_fonts(self.radarModePos, "_602a,_7269")
         else
-            self:draw_5x5_letter(self.radarModePos, "monster", "white")
+            self:draw_5x5_letter(self.radarModePos, "怪物", "white")
         end
     elseif properties.radarMode == 4 then --player
         if properties.language == language[1] then
@@ -3058,13 +3058,13 @@ function attPage:refresh()
             if mod == "SpaceShip" then
                 if joyUtil and joyUtil.LeftJoyClick then
                     self.window.setCursorPos(x - 3, y)
-                    self.window.blit("!BURNING!", "fffffffff", "eeeeeeeee")
+                    self.window.blit("!燃烧中!", "fffffffff", "eeeeeeeee")
                 else
                     self.window.setCursorPos(x - 2, y - 1)
                     if properties.coupled then
-                        self.window.blit("Coupled", genStr(bg, 7), genStr(select, 7))
+                        self.window.blit("耦合", genStr(bg, 7), genStr(select, 7))
                     else
-                        self.window.blit("Coupled", genStr(font, 7), genStr(bg, 7))
+                        self.window.blit("耦合", genStr(font, 7), genStr(bg, 7))
                     end
                 end
             else
@@ -3076,12 +3076,12 @@ function attPage:refresh()
                 self.window.blit(("PITCH%6.1f"):format(flight_control.pitch), genStr(other, 11), genStr(bg, 11))
             end
             self.window.setCursorPos(x - 2, y + 2)
-            self.window.blit("tuning >", genStr(bg, 8), genStr(select, 8))
+            self.window.blit("调节 >", genStr(bg, 8), genStr(select, 8))
             self.window.setCursorPos(x - 2, y + 3)
             if properties.lock then
-                self.window.blit("LOCK  ON", genStr(bg, 8), genStr(other, 8))
+                self.window.blit("锁定 开", genStr(bg, 8), genStr(other, 8))
             else
-                self.window.blit("LOCK OFF", genStr(other, 8), genStr(bg, 8))
+                self.window.blit("锁定 关", genStr(other, 8), genStr(bg, 8))
             end
 
             self.window.setCursorPos(x - 3, y + 4)
@@ -3201,9 +3201,9 @@ function shipNetPage:init()
     local bg, font, title, select, other = properties.bg, properties.font, properties.title, properties.select,
         properties.other
     self.buttons = {
-        { text = "<  SHIPNET  >", x = self.width / 2 - 5, y = 1,               blitF = genStr(title, 13), blitB = genStr(bg, 13) },
-        { text = "set",           x = 2,                  y = self.height - 1, blitF = genStr(bg, 3),     blitB = genStr(select, 3) },
-        { text = "connect",       x = self.width - 7,     y = self.height - 1, blitF = genStr(bg, 7),     blitB = genStr(select, 7) },
+        { text = "<  飞船网络  >", x = self.width / 2 - 5, y = 1,               blitF = genStr(title, 13), blitB = genStr(bg, 13) },
+        { text = "设置",           x = 2,                  y = self.height - 1, blitF = genStr(bg, 3),     blitB = genStr(select, 3) },
+        { text = "连接",       x = self.width - 7,     y = self.height - 1, blitF = genStr(bg, 7),     blitB = genStr(select, 7) },
     }
     self.otherButtons = {
         { text = "      v      ", x = 2, y = self.height - 2, blitF = genStr(bg, 13), blitB = genStr(other, 13) },
@@ -4580,7 +4580,7 @@ function recordings:refresh()
             self.window.blit(3 - replay_listener.cd .. " s to start", "dddddddddddd", "ffffffffffff")
         else
             self.window.setCursorPos(3, 5)
-            self.window.blit("recording..", "ddddddddddd", "fffffffffff")
+            self.window.blit("录制中..", "ddddddddddd", "fffffffffff")
         end
         
         self.window.setCursorPos(2, 7)
@@ -4616,7 +4616,7 @@ function recordings:refresh()
             self.pool:refresh(list)
         else
             self.window.setCursorPos(2, 6)
-            self.window.blit("No Disk", "eeeeeee", "fffffff")
+            self.window.blit("无磁盘", "eeeeeee", "fffffff")
         end
     end
 end
@@ -4818,11 +4818,11 @@ function set_colortheme:init()
     self.indexFlag = 4
     self.buttons = {
         { text = "<",          x = 1, y = 1, blitF = title,            blitB = bg },
-        { text = "font      ", x = 4, y = 3, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(font, 2) },
-        { text = "background", x = 4, y = 4, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(bg, 2) },
-        { text = "title     ", x = 4, y = 5, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(title, 2) },
-        { text = "select    ", x = 4, y = 6, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(select, 2) },
-        { text = "other     ", x = 4, y = 7, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(other, 2) },
+        { text = "字体      ", x = 4, y = 3, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(font, 2) },
+        { text = "背景", x = 4, y = 4, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(bg, 2) },
+        { text = "标题     ", x = 4, y = 5, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(title, 2) },
+        { text = "选择    ", x = 4, y = 6, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(select, 2) },
+        { text = "其他     ", x = 4, y = 7, blitF = genStr(font, 10), blitB = genStr(bg, 10), prt = genStr(other, 2) },
     }
 end
 
@@ -5067,7 +5067,7 @@ end
 -- screensManagerScreen
 -- 用于管理所有其他的屏幕；主机专属屏幕
 local screensManagerScreen = {
-    screenTitle = "screens manager"
+    screenTitle = "屏幕管理器"
 }
 screensManagerScreen.__index = setmetatable(screensManagerScreen, abstractScreen)
 
@@ -5101,18 +5101,18 @@ function screensManagerScreen:refresh()
         local report
         if not monitorUtil.hasMonitor(name) then
             self.monitor.setBackgroundColor(colors.red)
-            status = "MISSING"
+            status = "缺失"
         elseif not tableHasValue(properties.enabledMonitors, name) then
             self.monitor.setBackgroundColor(colors.lightGray)
-            status = "OFFLINE"
+            status = "离线"
         elseif not monitorUtil.screens[name] then
             self.monitor.setBackgroundColor(colors.red)
-            status = "ONLINE"
+            status = "在线"
             title = "???"
         else
             local text, color = monitorUtil.screens[name]:report()
             self.monitor.setBackgroundColor(color or colors.lime)
-            status = "ONLINE"
+            status = "在线"
             title = monitorUtil.screens[name].screenTitle
             report = text
         end
@@ -5145,8 +5145,8 @@ function screensManagerScreen:onTouch(x, y)
     end
 end
 
-local absHologramSetPage = setmetatable({ screenTitle = "hologram setting" }, {__index=abstractScreen})
-local hologramManagerScreen = setmetatable({ screenTitle = "hologram manager" }, {__index=abstractScreen})
+local absHologramSetPage = setmetatable({ screenTitle = "全息图设置" }, {__index=abstractScreen})
+local hologramManagerScreen = setmetatable({ screenTitle = "全息图管理器" }, {__index=abstractScreen})
 
 function absHologramSetPage:init()
     
@@ -5169,27 +5169,27 @@ function absHologramSetPage:refresh()
     self.monitor.blit(("radar  - %5d -"):format(properties.radarRange), "000000ffffffffff", "fffffffb0000000e")
     self.monitor.setCursorPos(2, 8)
     if prop.drawHoloBorder then
-        self.monitor.blit("draw border", "fffffffffff", "00000000000")
+        self.monitor.blit("绘制边框", "fffffffffff", "00000000000")
     else
-        self.monitor.blit("draw border", "00000000000", "fffffffffff")
+        self.monitor.blit("绘制边框", "00000000000", "fffffffffff")
     end
     self.monitor.setCursorPos(2, 9)
     if prop.drawInputLine then
-        self.monitor.blit("Input Line", "ffffffffff", "0000000000")
+        self.monitor.blit("输入线", "ffffffffff", "0000000000")
     else
-        self.monitor.blit("Input Line", "0000000000", "ffffffffff")
+        self.monitor.blit("输入线", "0000000000", "ffffffffff")
     end
     self.monitor.setCursorPos(2, 10)
     if prop.rgb_lock_box then
-        self.monitor.blit("RGB_Lock_Box", "ffffffffffff", "000000000000")
+        self.monitor.blit("RGB锁定框", "ffffffffffff", "000000000000")
     else
-        self.monitor.blit("RGB_Lock_Box", "000000000000", "ffffffffffff")
+        self.monitor.blit("RGB锁定框", "000000000000", "ffffffffffff")
     end
     self.monitor.setCursorPos(2, 11)
     if prop.other_targets then
-        self.monitor.blit("Other_Target", "ffffffffffff", "000000000000")
+        self.monitor.blit("其他目标", "ffffffffffff", "000000000000")
     else
-        self.monitor.blit("Other_Target", "000000000000", "ffffffffffff")
+        self.monitor.blit("其他目标", "000000000000", "ffffffffffff")
     end
     self.monitor.setCursorPos(28, 3)
     self.monitor.blit(("translation_x --%5.1f++"):format(prop.translation.x), genStr("0", 14).."fffffffff", genStr("f", 14).."b5000001e")
@@ -5355,10 +5355,10 @@ local screenPickerScreen = setmetatable({ screenTitle = "idle" }, { __index = ab
 function screenPickerScreen:init()
     self.rows = {}
     if self.name == "computer" then
-        table.insert(self.rows, { name = "screens manager", class = screensManagerScreen })
-        table.insert(self.rows, { name = "hologram manager", class = hologramManagerScreen })
+        table.insert(self.rows, { name = "屏幕管理器", class = screensManagerScreen })
+        table.insert(self.rows, { name = "全息图管理器", class = hologramManagerScreen })
     end
-    table.insert(self.rows, { name = "flight gizmo", class = flightGizmoScreen })
+    table.insert(self.rows, { name = "飞行小工具", class = flightGizmoScreen })
     if #self.rows == 1 then
         monitorUtil.newScreen(self.name, self.rows[1].class)
         return
@@ -5404,7 +5404,7 @@ end
 -- loadingScreen
 -- 加载屏幕
 local loadingScreen = {
-    screenTitle = "loading"
+    screenTitle = "加载中"
 }
 loadingScreen.__index = setmetatable(loadingScreen, abstractScreen)
 
@@ -5430,7 +5430,7 @@ function loadingScreen:refresh()
         self.monitor.clear()
         self.monitor.setCursorBlink(false)
         self.monitor.setCursorPos(offset_x + 5, offset_y + 3)
-        self.monitor.blit("WELCOME", "0000000", "fffffff")
+        self.monitor.blit("欢迎", "0000000", "fffffff")
 
         self.monitor.setCursorPos(offset_x + 9 - #properties.userName / 2, offset_y + 5)
         self.monitor.write(properties.userName)
